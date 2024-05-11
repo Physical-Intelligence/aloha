@@ -1,10 +1,10 @@
 ### Task parameters
 
-DATA_DIR = '<put your data dir here>'
+DATA_DIR = '/home/aloha/data/'
 TASK_CONFIGS = {
-    'aloha_wear_shoe':{
+    'test':{
         'dataset_dir': DATA_DIR + '/aloha_wear_shoe',
-        'num_episodes': 50,
+        'num_episodes': 1,
         'episode_len': 1000,
         'camera_names': ['cam_high', 'cam_low', 'cam_left_wrist', 'cam_right_wrist']
     },

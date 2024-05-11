@@ -3,6 +3,12 @@ import sys
 import IPython
 e = IPython.embed
 
+# cd ~/interbotix_ws/src/aloha/aloha_scripts
+# /home/aloha/miniforge3/envs/aloha/bin/python one_side_teleop.py right
+# /home/aloha/miniforge3/envs/aloha/bin/python one_side_teleop.py left
+# /home/aloha/miniforge3/envs/aloha/bin/python record_episodes.py --dataset_dir /home/aloha/data/ --episode_idx 0
+
+
 from interbotix_xs_modules.arm import InterbotixManipulatorXS
 from interbotix_xs_msgs.msg import JointSingleCommand
 from constants import MASTER2PUPPET_JOINT_FN, DT, START_ARM_POSE, MASTER_GRIPPER_JOINT_MID, PUPPET_GRIPPER_JOINT_CLOSE
@@ -31,7 +37,7 @@ def press_to_start(master_bot):
     # disable torque for only gripper joint of master robot to allow user movement
     master_bot.dxl.robot_torque_enable("single", "gripper", False)
     print(f'Close the gripper to start')
-    close_thresh = -0.3
+    close_thresh = -0.0
     pressed = False
     while not pressed:
         gripper_pos = get_arm_gripper_positions(master_bot)

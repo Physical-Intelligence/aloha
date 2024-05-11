@@ -1,0 +1,4 @@
+SUBSYSTEM=="tty", ATTRS{serial}=="FT88YWED", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_master_right"
+SUBSYSTEM=="tty", ATTRS{serial}=="FT8J0X80", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_master_left"
+SUBSYSTEM=="tty", ATTRS{serial}=="FT88YQRC", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_puppet_right"
+SUBSYSTEM=="tty", ATTRS{serial}=="FT88YXQH", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_puppet_left"
