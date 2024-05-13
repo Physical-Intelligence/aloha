@@ -14,7 +14,7 @@ Then you can build the docker:
 
 In one terminal, start the ROS processes by doing:
 ``` 
-docker run --rm -it --network=host -v /dev:/dev -v /home/pi28/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
+docker run --rm -it --network=host -v /dev:/dev -v ~/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
 sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
 source /opt/ros/noetic/setup.sh && source ~/interbotix_ws/devel/setup.sh
 roslaunch aloha 4arms_teleop.launch
@@ -22,7 +22,7 @@ roslaunch aloha 4arms_teleop.launch
 
 In another terminal, start the data collect job:
 ```
-docker run --rm -it --network=host -v /dev:/dev -v /home/pi28/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
+docker run --rm -it --network=host -v /dev:/dev -v ~/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
 sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
 cd ~/interbotix_ws/src/aloha/aloha_scripts
 python3 record_episodes.py --dataset_dir ~/interbotix_ws/src/aloha/data --episode_idx 0 --task_name test
