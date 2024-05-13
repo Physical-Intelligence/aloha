@@ -44,42 +44,14 @@ RUN apt-get update && \
             matplotlib \
             einops \
             packaging \
-            h5py
-
-# Authorize SSH Host
-RUN mkdir -p /root/.ssh && \
-    chmod 777 /root/.ssh
-# See: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
-RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-# Add the keys and set permissions
-RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
-    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
-    chmod 0600 /root/.ssh/id_rsa && \
-    chmod 0600 /root/.ssh/id_rsa.pub && \
-    cd /root/interbotix_ws/src && \
-    git clone git@github.com:Physical-Intelligence/aloha.git
+            h5py \
+            IPython
 
 
+COPY . /root/interbotix_ws/src/aloha
 RUN cd /root/interbotix_ws && source /opt/ros/noetic/setup.sh && source /root/interbotix_ws/devel/setup.sh && catkin_make
 RUN cp /root/interbotix_ws/src/aloha/arm.py /root/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_modules/src/interbotix_xs_modules/arm.py
 
 ## Copies over this robot config
 RUN cp /root/interbotix_ws/src/aloha/uvdev_configs/trossen_bimanual_1/99-fixed-interbotix-udev.rules /etc/udev/rules.d/99-fixed-interbotix-udev.rules
 # RUN sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
-
-
-## First build if you havent
-## docker build . -t run_aloha -f ./run.Dockerfile --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat ~/.ssh/id_rsa.pub)"
-
-## in one terminal:
-## docker run --rm -it --network=host  -v /dev:/dev --privileged run_aloha /bin/bash
-## sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
-## source /opt/ros/noetic/setup.sh && source ~/interbotix_ws/devel/setup.sh
-## roslaunch aloha 4arms_teleop.launch
-
-## in another terminal:
-## docker run --rm -it --network=host  -v /dev:/dev --privileged run_aloha /bin/bash 
-## sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
-## cd ~/interbotix_ws/src/aloha/aloha_scripts
-## python3 record_episodes.py --dataset_dir <data save dir> --episode_idx 0

@@ -1,5 +1,35 @@
 # ALOHA: A Low-cost Open-source Hardware System for Bimanual Teleoperation
 
+#### PI Setup Instructions
+
+First, clone this repo.
+
+Then, do everything in the hardware portion of the below readme. Except wherever it asks you to modify something in 
+`/etc/udev/rules.d/99-fixed-interbotix-udev.rules`, modify under a new file in this repo under `uvdev_configs/ROBOT_ID/99-fixed-interbotix-udev.rules`
+
+Once you've done this (and the other hardware steps), make sure to push your new file into the main branch of this repo!
+
+Finally, modify the run.Dockerfile line 56 to change the ROBOT_ID to your current one. TODO: Suraj make this a cmd line arg.
+
+Then you can build the docker:
+`docker build . -t run_aloha -f ./run.Dockerfile --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat ~/.ssh/id_rsa.pub)"`
+
+In one terminal, start the ROS processes by doing:
+``` 
+docker run --rm -it --network=host -v /dev:/dev -v /home/pi28/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
+sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
+source /opt/ros/noetic/setup.sh && source ~/interbotix_ws/devel/setup.sh
+roslaunch aloha 4arms_teleop.launch
+```
+
+In another terminal, start the data collect job:
+```
+docker run --rm -it --network=host -v /dev:/dev -v /home/pi28/code/aloha:/root/interbotix_ws/src/aloha --privileged run_aloha /bin/bash
+sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
+cd ~/interbotix_ws/src/aloha/aloha_scripts
+python3 record_episodes.py --dataset_dir ~/interbotix_ws/src/aloha/data --episode_idx 0 --task_name test
+```
+
 #### Project Website: https://tonyzhaozh.github.io/aloha/
 
 This codebase contains implementation for teleoperation and data collection with the ALOHA hardware.
