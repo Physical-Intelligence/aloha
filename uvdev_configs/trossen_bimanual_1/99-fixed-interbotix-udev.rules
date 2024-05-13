@@ -2,3 +2,7 @@ SUBSYSTEM=="tty", ATTRS{serial}=="FT88YWED", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{
 SUBSYSTEM=="tty", ATTRS{serial}=="FT8J0X80", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_master_left"
 SUBSYSTEM=="tty", ATTRS{serial}=="FT88YQRC", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_puppet_right"
 SUBSYSTEM=="tty", ATTRS{serial}=="FT88YXQH", ENV{ID_MM_DEVICE_IGNORE}="1", ATTR{device/latency_timer}="1", SYMLINK+="ttyDXL_puppet_left"
+SUBSYSTEM=="video4linux", ATTRS{serial}=="130523070912", ATTR{index}=="0", ATTRS{idProduct}=="0b5b", ATTR{device/latency_timer}="1", SYMLINK+="CAM_RIGHT_WRIST"
+SUBSYSTEM=="video4linux", ATTRS{serial}=="133323070799", ATTR{index}=="0", ATTRS{idProduct}=="0b5b", ATTR{device/latency_timer}="1", SYMLINK+="CAM_LEFT_WRIST"
+SUBSYSTEM=="video4linux", ATTRS{serial}=="128223070599", ATTR{index}=="0", ATTRS{idProduct}=="0b5b", ATTR{device/latency_timer}="1", SYMLINK+="CAM_LOW"
+SUBSYSTEM=="video4linux", ATTRS{serial}=="133323070708", ATTR{index}=="0", ATTRS{idProduct}=="0b5b", ATTR{device/latency_timer}="1", SYMLINK+="CAM_HIGH"
