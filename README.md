@@ -10,7 +10,7 @@ Then, do everything in the hardware portion of the below readme. Except wherever
 Finally, modify the run.Dockerfile line 56 to change the ROBOT_ID to your current one. TODO: Suraj make this a cmd line arg.
 
 Then you can build the docker:
-`docker build . -t run_aloha -f ./run.Dockerfile --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat ~/.ssh/id_rsa.pub)"`
+`docker build . -t run_aloha -f ./run.Dockerfile"`
 
 In one terminal, start the ROS processes by doing:
 ``` 
