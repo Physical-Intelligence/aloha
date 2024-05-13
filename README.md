@@ -7,8 +7,6 @@ First, clone this repo.
 Then, do everything in the hardware portion of the below readme. Except wherever it asks you to modify something in 
 `/etc/udev/rules.d/99-fixed-interbotix-udev.rules`, modify under a new file in this repo under `uvdev_configs/ROBOT_ID/99-fixed-interbotix-udev.rules`
 
-Once you've done this (and the other hardware steps), make sure to push your new file into the main branch of this repo!
-
 Finally, modify the run.Dockerfile line 56 to change the ROBOT_ID to your current one. TODO: Suraj make this a cmd line arg.
 
 Then you can build the docker:
