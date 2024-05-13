@@ -26,12 +26,25 @@ RUN curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulato
 RUN chmod +x xsarm_amd64_install.sh 
 RUN export DEBIAN_FRONTEND=noninteractive && export TZ='America/Los_Angeles' && ./xsarm_amd64_install.sh -d noetic -n
 
-ARG ssh_prv_key
 ARG ssh_pub_key
+ARG ssh_prv_key
 
 RUN apt-get update && \
     apt-get install -y \
-        openssh-client
+        openssh-client \
+    && pip install torchvision \
+            torch \
+            pyquaternion \
+            pyyaml \
+            rospkg \
+            pexpect \
+            mujoco==2.3.7 \
+            dm_control==1.0.14 \
+            opencv-python \
+            matplotlib \
+            einops \
+            packaging \
+            h5py
 
 # Authorize SSH Host
 RUN mkdir -p /root/.ssh && \
@@ -52,7 +65,21 @@ RUN cd /root/interbotix_ws && source /opt/ros/noetic/setup.sh && source /root/in
 RUN cp /root/interbotix_ws/src/aloha/arm.py /root/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_modules/src/interbotix_xs_modules/arm.py
 
 ## Copies over this robot config
-# RUN cp /root/interbotix_ws/src/aloha/uvdev_configs/99-fixed-interbotix-udev.rules /etc/udev/rules.d/99-fixed-interbotix-udev.rules
-# RUN ls /dev && ls /dev/tty && ls /dev/snd
-
+RUN cp /root/interbotix_ws/src/aloha/uvdev_configs/trossen_bimanual_1/99-fixed-interbotix-udev.rules /etc/udev/rules.d/99-fixed-interbotix-udev.rules
 # RUN sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
+
+
+## First build if you havent
+## docker build . -t run_aloha -f ./run.Dockerfile --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat ~/.ssh/id_rsa.pub)"
+
+## in one terminal:
+## docker run --rm -it --network=host  -v /dev:/dev --privileged run_aloha /bin/bash
+## sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
+## source /opt/ros/noetic/setup.sh && source ~/interbotix_ws/devel/setup.sh
+## roslaunch aloha 4arms_teleop.launch
+
+## in another terminal:
+## docker run --rm -it --network=host  -v /dev:/dev --privileged run_aloha /bin/bash 
+## sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger
+## cd ~/interbotix_ws/src/aloha/aloha_scripts
+## python3 record_episodes.py --dataset_dir <data save dir> --episode_idx 0
