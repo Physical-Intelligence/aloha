@@ -162,7 +162,7 @@ def capture_one_episode(dt, max_timesteps, camera_names, dataset_dir, dataset_na
 
         for name, array in data_dict.items():
             root[name][...] = array
-    print(f'Saving: {time.time() - t0:.1f} secs')
+    print(f'Saving to {dataset_dir}: {time.time() - t0:.1f} secs')
 
     return True
 
@@ -183,7 +183,7 @@ def main(args):
     print(dataset_name + '\n')
     while True:
         is_healthy = capture_one_episode(DT, max_timesteps, camera_names, dataset_dir, dataset_name, overwrite)
-        if is_healthy:
+        if not is_healthy:
             break
 
 

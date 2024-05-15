@@ -53,5 +53,5 @@ RUN cd /root/interbotix_ws && source /opt/ros/noetic/setup.sh && source /root/in
 RUN cp /root/interbotix_ws/src/aloha/arm.py /root/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_modules/src/interbotix_xs_modules/arm.py
 
 ## Copies over this robot config
-RUN cp /root/interbotix_ws/src/aloha/uvdev_configs/trossen_bimanual_1/99-fixed-interbotix-udev.rules /etc/udev/rules.d/99-fixed-interbotix-udev.rules
+RUN cp /root/interbotix_ws/src/aloha/uvdev_configs/trossen_bimanual_2/99-fixed-interbotix-udev.rules /etc/udev/rules.d/99-fixed-interbotix-udev.rules
 # RUN sudo service udev restart && sudo udevadm control --reload && sudo udevadm trigger

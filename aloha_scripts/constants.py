@@ -1,11 +1,11 @@
 ### Task parameters
 
-DATA_DIR = '/home/aloha/data/'
+DATA_DIR = '/root/interbotix_ws/src/aloha/data/'
 TASK_CONFIGS = {
     'test':{
         'dataset_dir': DATA_DIR + '/aloha_wear_shoe',
-        'num_episodes': 1,
-        'episode_len': 1000,
+        'num_episodes': 10,
+        'episode_len': 6000,
         'camera_names': ['cam_high', 'cam_low', 'cam_left_wrist', 'cam_right_wrist']
     },
 }
