@@ -149,15 +149,22 @@ def move_arms(bot_list, target_pose_list, move_time=1):
         time.sleep(DT)
 
 def move_grippers(bot_list, target_pose_list, move_time):
+    print(f'Moving grippers to {target_pose_list=}')
     gripper_command = JointSingleCommand(name="gripper")
     num_steps = int(move_time / DT)
     curr_pose_list = [get_arm_gripper_positions(bot) for bot in bot_list]
     traj_list = [np.linspace(curr_pose, target_pose, num_steps) for curr_pose, target_pose in zip(curr_pose_list, target_pose_list)]
-    for t in range(num_steps):
-        for bot_id, bot in enumerate(bot_list):
-            gripper_command.cmd = traj_list[bot_id][t]
-            bot.gripper.core.pub_single.publish(gripper_command)
-        time.sleep(DT)
+    import json
+    import datetime
+    with open(f"/data/gripper_traj_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl", "a") as f:
+        for t in range(num_steps):
+            d = {}
+            for bot_id, bot in enumerate(bot_list):
+                gripper_command.cmd = traj_list[bot_id][t]
+                bot.gripper.core.pub_single.publish(gripper_command)
+                d[bot_id] = {'obs': get_arm_joint_positions(bot), 'act': traj_list[bot_id][t]}
+            f.write(json.dumps(d) + '\n')
+            time.sleep(DT)
 
 def setup_puppet_bot(bot):
     bot.dxl.robot_reboot_motors("single", "gripper", True)
