@@ -84,7 +84,6 @@ Step 2: Set max current for gripper motors
 - Repeat this for both puppet robots.
 - This limits the max current through gripper motors, to prevent overloading errors.
 
-
 Step 3: Setup 4 cameras
 - You may use usb hub here, but *maximum 2 cameras per hub for reasonable latency*.
 - To make sure all 4 cameras are binding to a consistent port, similar steps are needed.
